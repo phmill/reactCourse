@@ -1,18 +1,64 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import Person from './Person/Person'
 
-const persons = props =>
-  props.persons.map((person, index) => {
-    return (
-      <Person
-        click={() => props.clicked(index)}
-        name={person.name}
-        age={person.age}
-        changed={event => props.changed(event, person.id)}
-        key={person.id}
-      />
-    )
-  })
+class Persons extends Component {
+  constructor(props) {
+    super(props)
+    console.log('[Persons.js] inside constructor', props)
+  }
 
-export default persons
+  componentWillMount() {
+    console.log('[Persons.js] inside componentWillMount ()')
+  }
+
+  componentDidMount() {
+    console.log('[Persons.js] inside componentDidMount ()')
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(
+      '[UPDATE Persons.js] inside componentWillReceiveProps()',
+      nextProps
+    )
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(
+      '[UPDATE Persons.js] inside shouldComponentUpdate',
+      nextProps,
+      nextState
+    )
+    return nextProps.persons !== this.props.persons
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log(
+      '[UPDATE Persons.js] inside ComponentWillUpdate',
+      nextProps,
+      nextState
+    )
+  }
+
+  componentDidUpdate() {
+    console.log('[UPDATE Persons.js] inside ComponentDidUpdate')
+  }
+
+  render() {
+    console.log('[Persons.js] inside render()')
+
+    return this.props.persons.map((person, index) => {
+      return (
+        <Person
+          click={() => this.props.clicked(index)}
+          name={person.name}
+          age={person.age}
+          changed={event => this.props.changed(event, person.id)}
+          key={person.id}
+        />
+      )
+    })
+  }
+}
+
+export default Persons
